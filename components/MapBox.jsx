@@ -49,7 +49,7 @@ function MapBox() {
   // let center = {
   //   lat: location.coordinates.lat,
   //   lng: location.coordinates.lng,
-  // };
+  // }
 
   // ? city searching function
   const searchCity = async () => {
