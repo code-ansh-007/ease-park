@@ -46,10 +46,6 @@ function MapBox() {
         lng: location.coordinates.lng,
       });
   }, [location]);
-  // let center = {
-  //   lat: location.coordinates.lat,
-  //   lng: location.coordinates.lng,
-  // }
 
   // ? city searching function
   const searchCity = async () => {
@@ -98,7 +94,6 @@ function MapBox() {
 
         {selectedSite && (
           <InfoWindowF
-            // position={{ lat: parking.lat, lng: parking.lng }}
             position={{ lat: selectedSite.lat, lng: selectedSite.lng }}
           >
             <div className="flex flex-col gap-3 m-2">
