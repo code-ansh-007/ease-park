@@ -3,19 +3,24 @@ import {
   GoogleMap,
   InfoWindowF,
   Marker,
+  MarkerF,
   useJsApiLoader,
 } from "@react-google-maps/api";
 import useGeoLocation from "@/hooks/useGeoLocation";
-import sites from "@/data";
+// import sites from "@/data";
 import Link from "next/link";
 import Image from "next/image";
+import { db } from "@/firebase";
+import { collection, getDocs, query } from "firebase/firestore";
+// import Geocoder from "./Geocoder.js";
+// import { Geocoder } from "./Geocoder";
 
 const containerStyle = {
   width: "100vw",
   height: "100vh",
 };
 
-function MapBox() {
+function MapBox({ sites }) {
   const { isLoaded } = useJsApiLoader({
     id: "google-map-script",
     googleMapsApiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY,
@@ -38,8 +43,12 @@ function MapBox() {
     return resultString;
   };
 
+  const [searchLocate, setSearchLocate] = useState(false);
+  const [drag, setDrag] = useState(false);
   const location = useGeoLocation();
   useEffect(() => {
+    if (drag) return;
+    if (searchLocate) return;
     if (location)
       setCenter({
         lat: location.coordinates.lat,
@@ -47,16 +56,17 @@ function MapBox() {
       });
   }, [location]);
 
-  // ? city searching function
-  const searchCity = async () => {
-    const geoCodeUrl = `https://maps.googleapis.com/maps/api/geocode/json?address=${encodeURIComponent(
-      city + ",India"
-    )}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}`;
-    const geocodeResponse = await fetch(geoCodeUrl);
-    const geocodeData = await geocodeResponse.json();
-    console.log(geocodeData);
-    const { lat, lng } = geocodeData.results[0].geometry.location;
-    setCenter({ lat, lng });
+  const searchLocation = async () => {
+    const geoCodeUrl = `https://api.opencagedata.com/geocode/v1/json?q=${city}&key=8b30eeeacfb94fcd8e9e423e6ee9633f`;
+    const resp = await fetch(geoCodeUrl);
+    const data = await resp.json();
+    const result = data.results[0];
+    const { lat, lng } = result.geometry;
+    setCenter({
+      lat,
+      lng,
+    });
+    setSearchLocate(true);
   };
 
   return isLoaded ? (
@@ -72,18 +82,26 @@ function MapBox() {
             placeholder="Enter city name..."
           />
           <button
-            onClick={searchCity}
+            onClick={searchLocation}
             className="text-white active:scale-110 transition transform duration-300 bg-blue-500 p-1 px-4 rounded-2xl font-semibold"
           >
             Search
           </button>
         </div>
       </div>
-      <GoogleMap mapContainerStyle={containerStyle} center={center} zoom={16}>
-        {sites.map((site) => (
-          <Marker
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={center}
+        zoom={11}
+        onDrag={() => setDrag(true)}
+      >
+        {sites?.map((site) => (
+          <MarkerF
             key={site.id}
-            position={{ lat: site.lat, lng: site.lng }}
+            position={{
+              lat: site.location.latitude,
+              lng: site.location.longitude,
+            }}
             onClick={() => {
               site === selectedSite
                 ? setSelectedSite(undefined)
@@ -94,14 +112,18 @@ function MapBox() {
 
         {selectedSite && (
           <InfoWindowF
-            position={{ lat: selectedSite.lat, lng: selectedSite.lng }}
+            position={{
+              lat: selectedSite.location.latitude,
+              lng: selectedSite.location.longitude,
+            }}
           >
             <div className="flex flex-col gap-3 m-2">
               <span className="text-black font-semibold text-lg">
-                {capitalizeWords(selectedSite.name)}
+                {capitalizeWords(selectedSite.listingName)}
               </span>
-              <span>Parking Slots: {selectedSite.parkingSlots}</span>
-              <Link href={selectedSite.gMapLink} target="_blank">
+              <span>Parking Slots: {selectedSite.numSlots}</span>
+              <span>Cost per hour: ₹{selectedSite.pricePerHour}</span>
+              <Link href={selectedSite.gmapUrl} target="_blank">
                 <div className="flex gap-2 items-end">
                   <Image src={"/assets/gmaps.png"} width={20} height={20} />
                   <span className="underline text-blue-500 font-semibold">

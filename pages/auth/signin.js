@@ -131,7 +131,7 @@ const Signin = () => {
                 {userPhone.length === 10 && userFullName !== "" && (
                   <button
                     onClick={() => {
-                      updateDetails("admin");
+                      updateDetails("user");
                     }}
                     className="p-1 bg-blue-500 text-white"
                   >

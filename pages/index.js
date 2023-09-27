@@ -1,13 +1,30 @@
 import MapBox from "@/components/MapBox";
-import Link from "next/link";
+import { db } from "@/firebase";
+import { collection, getDocs, query } from "firebase/firestore";
 
-export default function Home() {
+export default function Home({ sites }) {
   return (
     <main>
-      <Link href={"/auth/signin"}>
-        <span className="p-1 bg-blue-500 text-white">click to sign in</span>
-      </Link>
-      <MapBox />
+      <MapBox sites={sites} />
     </main>
   );
+}
+
+export async function getServerSideProps() {
+  let sites = [];
+  const q = query(collection(db, "listings"));
+
+  const qSnap = await getDocs(q);
+  qSnap.forEach((doc) => {
+    const siteData = doc.data();
+    let timeStamp = new Date(siteData.timeStamp);
+    siteData.timeStamp = timeStamp.toDateString();
+    sites.push(siteData);
+  });
+
+  return {
+    props: {
+      sites,
+    },
+  };
 }
