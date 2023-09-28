@@ -75,9 +75,7 @@ const Signin = () => {
     <div
       className={`flex flex-col items-center justify-center gap-10 h-screen bg-[#062145] ${vt.className}`}
     >
-      <h1 className="text-6xl text-white">
-        Ease<span className="text-[#5EE65A]">Park</span>
-      </h1>
+      <img src="/easepark.svg" className=""></img>
       {!session && (
         <div>
           <button
@@ -98,14 +96,13 @@ const Signin = () => {
             log out
           </button> */}
           <span className="text-xl font-semibold text-white">
-            Who are you ?
           </span>
           <div className="flex flex-col gap-5 items-center w-full">
             <span
-              className={`p-2 bg-green-400 active:scale-110 transition transform duration-300 border-2 border-green-500 rounded-2xl  font-bold w-full text-center ${
+              className={`p-2 bg-[#5ee65a] active:scale-110 transition transform duration-300 border-2 border-green-500 rounded-2xl  font-bold w-full text-center ${
                 showUser
                   ? "bg-gray-200 text-gray-500 border-gray-600"
-                  : "text-black"
+                  : "text-white"
               }`}
               onClick={() => {
                 setShowUser(true);
@@ -115,10 +112,10 @@ const Signin = () => {
               User
             </span>
             <span
-              className={`p-2 bg-green-400 active:scale-110 transition transform duration-300 border-2 border-green-500 rounded-2xl  font-bold w-full text-center ${
+              className={`p-2 bg-[#5ee65a] active:scale-110 transition transform duration-300 border-2 border-green-500 rounded-2xl  font-bold w-full text-center ${
                 showAdmin
                   ? "bg-gray-200 text-gray-500 border-gray-600"
-                  : "text-black"
+                  : "text-white"
               }`}
               onClick={() => {
                 setShowAdmin(true);
