@@ -22,7 +22,7 @@ function SearchBar({ value, setterFunction, onSubmit }) {
   });
 
   return (
-    <main className={`bg-[#161B24] ${vt.className} w-full pb-5 rounded-b-3xl `}>
+    <main className={`bg-[#161B24]  w-full pb-5 rounded-b-3xl `}>
       <div className="h-12 mt-4 flex justify-center items-center">
         <div
           className={`bg-[#161b24;] w-3/4 h-5/6 rounded-full border-2 border-[#319a3c] border-solid flex justify-start items-center`}

@@ -3,7 +3,6 @@ import TopBar from "@/components/TopBar";
 import SearchBar from "@/components/SearchBar";
 import BottomBar from "@/components/BottomBar";
 import HomeParkingList from "@/components/HomeParkingList";
-import ParkingCard from "@/components/Parkingcard";
 import MapBox from "@/components/MapBox";
 import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "@/firebase";

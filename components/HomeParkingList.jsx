@@ -1,13 +1,15 @@
 import { VT323 } from "next/font/google";
-import ParkingCard from "./Parkingcard";
 import SmallCard from "./SmallCard";
 import { useState } from "react";
 import BookSlot from "./BookSlot";
-import { useRouter } from "next/router";
 import useModalState from "@/zustand/store";
+import { Poppins } from "next/font/google";
 
 const vt = VT323({ subsets: ["latin"], weight: ["400"] });
+const pop = Poppins({ subsets: ["latin"], weight: ["600"] });
 function HomeParkingList({ sites, location }) {
+  const [vehicleType, setVehicleType] = useState("car");
+
   // ? DISTANCE CALCULATION FUNCTION
 
   function calculateDistance(lat1, lon1, lat2, lon2) {
@@ -56,10 +58,20 @@ function HomeParkingList({ sites, location }) {
       <div className=" h-full bg-[#1c2331] rounded-t-3xl px-4">
         {!showNext && (
           <div className="flex justify-evenly pt-4 text-white">
-            <button className="flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid">
+            <button
+              onClick={() => setVehicleType("car")}
+              className={`${
+                vehicleType === "car" ? "bg-gray-400 text-white" : ""
+              } flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid`}
+            >
               <img src="car.svg" alt="" /> Car
             </button>
-            <button className="flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid">
+            <button
+              onClick={() => setVehicleType("bike")}
+              className={`${
+                vehicleType === "bike" ? "bg-gray-400 text-white" : ""
+              } flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid`}
+            >
               <img src="Bike.png" alt="" /> Bike
             </button>
           </div>
@@ -67,10 +79,12 @@ function HomeParkingList({ sites, location }) {
         {/* <div className="flex justify-center items-center pt-4 pb-32"></div>
         <div className="pt-24"></div> */}
         {!showNext ? (
-          <div className="grid grid-cols-2 gap-5">
+          <div className={`grid grid-cols-2 gap-5 ${pop.className}`}>
             {updatedSites.map((site, index) => (
               <div
                 onClick={() => {
+                  site.vehicleType = vehicleType;
+                  site.setShowNext = setShowNext;
                   setSiteDetails(site);
                   setShowNext(true);
                 }}
