@@ -20,6 +20,9 @@ export default Location;
 
 export async function getServerSideProps(context) {
   const session = await getSession(context);
+  if (session){
+
+  
   const id = session.user.id;
 
   // ?  check in db
@@ -27,10 +30,17 @@ export async function getServerSideProps(context) {
   const q = query(collection(db, "bookings"), where("custId", "==", id));
   const qSnap = await getDocs(q);
   const booking = qSnap.docs[0].data();
-
   return {
     props: {
       booking,
     },
   };
+  }
+  else{
+    return {
+      props: {
+        booking:[]
+      },
+    };
+  }
 }
