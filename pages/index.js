@@ -7,7 +7,7 @@ import { getSession } from "next-auth/react";
 
 const vt = VT323({ subsets: ["latin"], weight: ["400"] });
 
-export default function Home() {
+export default function Home({ demo }) {
   const router = useRouter();
   // Loading Effect
   useEffect(() => {
@@ -16,14 +16,14 @@ export default function Home() {
     const tl = gsap.timeline();
     tl.to(titleElement, {
       duration: 2,
-      transform: 'scale(0.7)',
+      transform: "scale(0.7)",
       ease: "power2.inOut",
     }).to(titleElement, {
       duration: 1.5,
-      transform: 'scale(3)',
+      transform: "scale(3)",
       opacity: 0,
-      transform: 'scale(3.5)',
-      display:'none',
+      transform: "scale(3.5)",
+      display: "none",
       ease: "power2.inOut",
     });
   }, []);
@@ -102,7 +102,7 @@ export default function Home() {
       </div>
       {/* Mobile Part */}
       <div className="flex justify-center items-center h-screen md:hidden">
-      {/* <h1 className={'${vt.className} text-6xl  tracking-wider animated-title text-white'}>
+        {/* <h1 className={'${vt.className} text-6xl  tracking-wider animated-title text-white'}>
           Ease<span className="text-[#5EE65A]">Park</span>
         </h1> */}
         <img src="easepark.svg" className="animated-title"></img>
@@ -133,21 +133,21 @@ export default function Home() {
   );
 }
 
-// export async function getServerSideProps(context) {
-//   const session = getSession(context);
-//   if (session) {
-//     return {
-//       redirect: {
-//         destination: "/mainHome",
-//         permanent: false,
-//       },
-//     };
-//   } else {
-//     return {
-//       redirect: {
-//         destination: "/",
-//         permanent: false,
-//       },
-//     };
-//   }
-// }
+export async function getServerSideProps(context) {
+  const session = getSession(context);
+  if (!session) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  } else {
+    return {
+      redirect: {
+        destination: "/mainHome",
+        permanent: false,
+      },
+    };
+  }
+}

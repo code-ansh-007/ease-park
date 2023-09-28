@@ -6,7 +6,7 @@ import HomeParkingList from "@/components/HomeParkingList";
 import MapBox from "@/components/MapBox";
 import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/firebase";
-import { getSession } from "next-auth/react";
+import { getSession, signOut } from "next-auth/react";
 import useGeoLocation from "@/hooks/useGeoLocation";
 
 const vt = VT323({ subsets: ["latin"], weight: ["400"] });
@@ -23,6 +23,7 @@ export default function MainHome({ sites, role }) {
       <HomeParkingList sites={sites} location={location} />
 
       <BottomBar />
+      <button onClick={signOut}>signout</button>
     </main>
   );
 }
