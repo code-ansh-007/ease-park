@@ -39,7 +39,7 @@ const BookSlot = () => {
 
       <div className="flex flex-col gap-2">
         <span className="font-bold text-xl text-white ">Select Time</span>
-        <div className="flex gap-2">
+        <div className="flex gap-2 text-white">
           <span
             onClick={() => {
               setTotalPrice(siteDetails.pricePerHour / 2);

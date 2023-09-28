@@ -4,6 +4,8 @@ import { useState } from "react";
 import BookSlot from "./BookSlot";
 import useModalState from "@/zustand/store";
 import { Poppins } from "next/font/google";
+import { BiSolidCar } from "react-icons/bi";
+import { FaMotorcycle } from "react-icons/fa6";
 
 const vt = VT323({ subsets: ["latin"], weight: ["400"] });
 const pop = Poppins({ subsets: ["latin"], weight: ["600"] });
@@ -54,32 +56,32 @@ function HomeParkingList({ sites, location }) {
   const { setSiteDetails } = useModalState();
 
   return (
-    <main className={`bg-[#161B24]  ${vt.className} pt-3`}>
+    <main className={`bg-[#161B24]  ${pop.className} pt-3`}>
       <div className=" h-full bg-[#1c2331] rounded-t-3xl px-4">
         {!showNext && (
-          <div className="flex justify-evenly pt-4 text-white">
+          <div className="flex justify-evenly pt-4 text-white ">
             <button
               onClick={() => setVehicleType("car")}
               className={`${
                 vehicleType === "car" ? "bg-gray-400 text-white" : ""
-              } flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid`}
+              } flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid text-xs`}
             >
-              <img src="car.svg" alt="" /> Car
+              <BiSolidCar size={"28px"} /> Car
             </button>
             <button
               onClick={() => setVehicleType("bike")}
               className={`${
                 vehicleType === "bike" ? "bg-gray-400 text-white" : ""
-              } flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid`}
+              } flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid text-xs`}
             >
-              <img src="Bike.png" alt="" /> Bike
+              <FaMotorcycle size={"28px"} /> Bike
             </button>
           </div>
         )}
         {/* <div className="flex justify-center items-center pt-4 pb-32"></div>
         <div className="pt-24"></div> */}
         {!showNext ? (
-          <div className={`grid grid-cols-2 gap-5 ${pop.className}`}>
+          <div className={` pt-4 grid grid-cols-2 gap-5  ${pop.className}`}>
             {updatedSites.map((site, index) => (
               <div
                 onClick={() => {
