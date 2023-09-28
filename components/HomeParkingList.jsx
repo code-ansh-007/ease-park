@@ -86,7 +86,6 @@ function HomeParkingList({ sites, location }) {
               <div
                 onClick={() => {
                   site.vehicleType = vehicleType;
-                  site.setShowNext = setShowNext;
                   setSiteDetails(site);
                   setShowNext(true);
                 }}

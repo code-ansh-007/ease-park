@@ -1,4 +1,15 @@
+import { db } from "@/firebase";
 import useModalState from "@/zustand/store";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDocs,
+  query,
+  updateDoc,
+  where,
+} from "firebase/firestore";
+import { useSession } from "next-auth/react";
 import React, { useState } from "react";
 import { AiFillBackward } from "react-icons/ai";
 import { BiArrowBack } from "react-icons/bi";
@@ -7,6 +18,36 @@ const BookSlot = () => {
   const { siteDetails } = useModalState();
   const [totalPrice, setTotalPrice] = useState(siteDetails.pricePerHour);
   const [selectedDuration, setSelectedDuration] = useState(30);
+  const { data: session } = useSession();
+
+  const customerDetails = async () => {
+    const q = query(
+      collection(db, "users"),
+      where("userId", "==", session.user.id)
+    );
+    const qSnap = await getDocs(q);
+    const cust = qSnap.docs[0].data();
+    return cust;
+  };
+
+  const handleNext = async () => {
+    const customer = await customerDetails();
+    try {
+      const docRef = await addDoc(collection(db, "bookings"), {
+        custId: session.user.id,
+        custName: customer.name,
+        totalPrice,
+        selectedDuration,
+        vehicletype: siteDetails.vehicleType,
+      });
+      await updateDoc(doc(db, "bookings", docRef.id), {
+        bookingId: docRef.id,
+      });
+      alert("Booking successfully created!");
+    } catch (error) {
+      alert("Booking could not be created");
+    }
+  };
 
   return (
     <div className=" flex flex-col gap-6 pt-8 pb-5">
@@ -104,7 +145,10 @@ const BookSlot = () => {
           <span className="text-white">₹{totalPrice}</span>
         </div>
 
-        <button className="w-fit bg-green-500 px-4 p-1 rounded-xl font-semibold text-white">
+        <button
+          onClick={handleNext}
+          className="w-fit bg-green-500 px-4 p-1 rounded-xl font-semibold text-white"
+        >
           Next
         </button>
       </div>
