@@ -158,7 +158,7 @@ const Signin = () => {
                   <button
                     onClick={() => {
                       updateDetails("user");
-                      router.push("/home");
+                      router.push("/mainHome");
                     }}
                     className={`p-1  bg-green-400 active:scale-110 transition transform duration-300 border-2 border-green-500 rounded-2xl  font-bold w-full text-center `}
                   >
@@ -206,7 +206,7 @@ const Signin = () => {
                   <button
                     onClick={() => {
                       updateDetails("admin");
-                      router.push("/home");
+                      router.push("/mainHome");
                     }}
                     className={`p-1  bg-green-400 active:scale-110 transition transform duration-300 border-2 border-green-500 rounded-2xl  font-bold w-full text-center  `}
                   >

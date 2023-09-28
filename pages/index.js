@@ -3,6 +3,7 @@ import { VT323 } from "next/font/google";
 import gsap from "gsap";
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
+import { getSession } from "next-auth/react";
 
 const vt = VT323({ subsets: ["latin"], weight: ["400"] });
 
@@ -127,3 +128,22 @@ export default function Home() {
     </main>
   );
 }
+
+// export async function getServerSideProps(context) {
+//   const session = getSession(context);
+//   if (session) {
+//     return {
+//       redirect: {
+//         destination: "/mainHome",
+//         permanent: false,
+//       },
+//     };
+//   } else {
+//     return {
+//       redirect: {
+//         destination: "/",
+//         permanent: false,
+//       },
+//     };
+//   }
+// }
