@@ -39,6 +39,7 @@ const BookSlot = () => {
         totalPrice,
         selectedDuration,
         vehicletype: siteDetails.vehicleType,
+        qrVerified: false,
       });
       await updateDoc(doc(db, "bookings", docRef.id), {
         bookingId: docRef.id,
