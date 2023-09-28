@@ -19,7 +19,8 @@ export default function MainHome({ sites }) {
       <MapBox sites={sites} />
       {/* <ParkingCard/> */}
       <div className=" w-full h-2/5 -mt- bg-[#161B24]"></div>
-      <HomeParkingList />
+      <HomeParkingList sites={sites} />
+
       <BottomBar />
     </main>
   );
