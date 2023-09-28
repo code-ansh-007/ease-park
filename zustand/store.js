@@ -20,6 +20,10 @@ const useModalState = create((set) => ({
   confirmBoxOpen: false,
   openConfirmBox: () => set({ confirmBoxOpen: true }),
   closeConfirmBox: () => set({ confirmBoxOpen: false }),
+
+  siteDetails: {},
+  setSiteDetails: (site) => set({ siteDetails: site }),
+  resetSiteDetails: () => set({ siteDetails: {} }),
 }));
 
 export default useModalState;
