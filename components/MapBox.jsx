@@ -57,8 +57,6 @@ function MapBox({ sites }) {
       });
   }, [location]);
 
-
-
   const searchLocation = async () => {
     const geoCodeUrl = `https://api.opencagedata.com/geocode/v1/json?q=${city}&key=8b30eeeacfb94fcd8e9e423e6ee9633f`;
     const resp = await fetch(geoCodeUrl);
@@ -95,58 +93,61 @@ function MapBox({ sites }) {
   }
 
   return isLoaded ? (
-
     <div className="flex flex-col items-start gap-3  ">
       <div className=" z-20 w-full bg-transparent">
-    <SearchBar value={city} setterFunction={setCity} onSubmit={searchLocation}/>
-    </div>
-      <div className="bg-black -mt-16 z-10" >
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={center}
-        zoom={11}
-        onDrag={() => setDrag(true)}
-      >
-        {sites?.map((site) => (
-          <MarkerF
-            key={site.id}
-            position={{
-              lat: site.location.latitude,
-              lng: site.location.longitude,
-            }}
-            onClick={() => {
-              site === selectedSite
-                ? setSelectedSite(undefined)
-                : setSelectedSite(site);
-            }}
-          />
-        ))}
+        <SearchBar
+          value={city}
+          setterFunction={setCity}
+          onSubmit={searchLocation}
+        />
+      </div>
+      <div className="bg-black -mt-16 z-10">
+        <GoogleMap
+          mapContainerStyle={containerStyle}
+          center={center}
+          zoom={11}
+          onDrag={() => setDrag(true)}
+        >
+          {sites?.map((site) => (
+            <MarkerF
+              key={site.id}
+              position={{
+                lat: site.location.latitude,
+                lng: site.location.longitude,
+              }}
+              onClick={() => {
+                site === selectedSite
+                  ? setSelectedSite(undefined)
+                  : setSelectedSite(site);
+              }}
+            />
+          ))}
 
-        {selectedSite && (
-          <InfoWindowF
-            position={{
-              lat: selectedSite.location.latitude,
-              lng: selectedSite.location.longitude,
-            }}
-          >
-            <div className="flex flex-col gap-3 m-2">
-              <span className="text-black font-semibold text-lg">
-                {capitalizeWords(selectedSite.listingName)}
-              </span>
-              <span>Parking Slots: {selectedSite.numSlots}</span>
-              <span>Cost per hour: ₹{selectedSite.pricePerHour}</span>
-              <Link href={selectedSite.gmapUrl} target="_blank">
-                <div className="flex gap-2 items-end">
-                  <Image src={"/assets/gmaps.png"} width={20} height={20} />
-                  <span className="underline text-blue-500 font-semibold">
-                    On Google Maps
-                  </span>
-                </div>
-              </Link>
-            </div>
-          </InfoWindowF>
-        )}
-      </GoogleMap>
+          {selectedSite && (
+            <InfoWindowF
+              position={{
+                lat: selectedSite.location.latitude,
+                lng: selectedSite.location.longitude,
+              }}
+            >
+              <div className="flex flex-col gap-3 m-2 z-50">
+                <span className="text-black font-semibold text-lg">
+                  {capitalizeWords(selectedSite.listingName)}
+                </span>
+                <span>Parking Slots: {selectedSite.numSlots}</span>
+                <span>Cost per hour: ₹{selectedSite.pricePerHour}</span>
+                <Link href={selectedSite.gmapUrl} target="_blank">
+                  <div className="flex gap-2 items-end">
+                    <Image src={"/assets/gmaps.png"} width={20} height={20} />
+                    <span className="underline text-blue-500 font-semibold">
+                      On Google Maps
+                    </span>
+                  </div>
+                </Link>
+              </div>
+            </InfoWindowF>
+          )}
+        </GoogleMap>
       </div>
     </div>
   ) : null;
