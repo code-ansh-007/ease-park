@@ -1,7 +1,10 @@
 import { VT323 } from "next/font/google";
 import SmallCard from "./SmallCard";
+import { Poppins } from "next/font/google";
+
 
 const vt = VT323({ subsets: ["latin"], weight: ["400"] });
+const pop = Poppins({ subsets: ["latin"], weight: ["600"] })
 function HomeParkingList({ sites, location }) {
   // ? DISTANCE CALCULATION FUNCTION
 
@@ -56,7 +59,7 @@ function HomeParkingList({ sites, location }) {
         </div>
         {/* <div className="flex justify-center items-center pt-4 pb-32"></div>
         <div className="pt-24"></div> */}
-        <div className="grid grid-cols-2 gap-5">
+        <div className={`grid grid-cols-2 gap-5 ${pop.className}`}>
           {updatedSites.map((site, index) => (
             <SmallCard key={index} site={site} />
           ))}
