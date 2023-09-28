@@ -1,11 +1,13 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import QrScanner from "qr-scanner";
+import { collection, doc, getDoc } from "firebase/firestore";
+import { db } from "@/firebase";
 
-const startScanner = (videoElement) => {
+const startScanner = (videoElement, onQRCodeDetected) => {
   const qrScanner = new QrScanner(
     videoElement,
     (result) => {
-      console.log("Decoded QR code:", result);
+      onQRCodeDetected(result);
     },
     {}
   );
@@ -14,16 +16,31 @@ const startScanner = (videoElement) => {
 
 const QRreader = () => {
   const videoRef = useRef(null);
+  const [bookingId, setBookingId] = useState("");
 
   useEffect(() => {
     if (videoRef.current) {
-      startScanner(videoRef.current);
+      startScanner(videoRef.current, (result) => {
+        setBookingId(result[Object.keys(result)[0]]);
+        verifyId();
+      });
     }
   }, []);
 
+  const verifyId = async () => {
+    try {
+      const docSnap = await getDoc(doc(db, "bookings", bookingId));
+      if (docSnap.exists()) {
+        alert("QR verified");
+      }
+    } catch (error) {
+      alert("QR not verified");
+    }
+  };
+
   return (
     <div>
-      <video ref={videoRef}></video>
+      <video ref={videoRef} className="rounded-xl"></video>
     </div>
   );
 };

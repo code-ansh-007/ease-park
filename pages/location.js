@@ -8,8 +8,10 @@ const Location = ({ booking }) => {
   const { custName, selectedDuration, vehicleType, totalPrice } = booking;
 
   return (
-    <main>
-      <QRcode bookingId={booking.bookingId} />
+    <main className="p-3 bg-red-400 h-screen flex flex-col items-center justify-center">
+      <div>
+        <QRcode bookingId={booking.bookingId} />
+      </div>
     </main>
   );
 };
