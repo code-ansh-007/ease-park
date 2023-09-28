@@ -53,6 +53,7 @@ const Signin = () => {
       await setDoc(
         docRef,
         {
+          role: "user",
           userFullName,
           userPhone,
         },
@@ -62,6 +63,7 @@ const Signin = () => {
       await setDoc(
         docRef,
         {
+          role: "admin",
           adminFullName,
           adminPhone,
         },
@@ -70,7 +72,9 @@ const Signin = () => {
   };
 
   return (
-    <div className={`flex flex-col items-center justify-center gap-10 h-screen bg-[#062145] ${vt.className}`}>
+    <div
+      className={`flex flex-col items-center justify-center gap-10 h-screen bg-[#062145] ${vt.className}`}
+    >
       <h1 className="text-8xl text-white">
         Ease<span className="text-[#5EE65A]">Park</span>
       </h1>
