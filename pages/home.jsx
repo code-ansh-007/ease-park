@@ -9,7 +9,7 @@ import ParkingCard from '@/components/Parkingcard';
 
 const vt = VT323({ subsets: ['latin'], weight: ["400"], });
 
-export default function MainHome() {
+export default function Home() {
   return (
     <main className={`bg-[#161B24]  h-screen ${vt.className} `}>
       <TopBar/>
