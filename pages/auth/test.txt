@@ -1,0 +1,94 @@
+<div className="flex flex-col items-center justify-center gap-2 ">
+        <span
+          className="p-2 bg-blue-500 text-white"
+          onClick={() => {
+            setShowUser(true);
+            setShowAdmin(false);
+          }}
+        >
+          Sign In as User
+        </span>
+        <span
+          className="p-2 bg-blue-500 text-white"
+          onClick={() => {
+            setShowAdmin(true);
+            setShowUser(false);
+          }}
+        >
+          Sign In as Admin
+        </span>
+
+        {/* ROLE BASED BLOCKS */}
+
+        {showUser && (
+          <div className="flex flex-col items-start gap-3">
+            <div className="flex flex-col items-start gap-1">
+              <label htmlFor="userFullName">Full Name</label>
+              <input
+                id="userFullName"
+                type="text"
+                value={userFullName}
+                onChange={(e) => setUserFullName(e.target.value)}
+                placeholder="Enter full name..."
+                className="border-[1px] border-neutral-800 p-2 rounded-xl outline-none"
+              />
+            </div>
+            <div className="flex flex-col items-start gap-1">
+              <label htmlFor="userPhoneNumber">Phone Number</label>
+              <input
+                id="userPhoneNumber"
+                type="number"
+                maxLength={10}
+                value={userPhone}
+                onChange={handlePhoneInputChange}
+                placeholder="e.g. 1234567890"
+                className="border-[1px] border-neutral-800 p-2 rounded-xl outline-none"
+              />
+            </div>
+            {userPhone.length === 10 && userFullName !== "" && (
+              <span
+                onClick={handleUserSignIn}
+                className="p-1 bg-blue-500 text-white"
+              >
+                Sign in with google
+              </span>
+            )}
+          </div>
+        )}
+
+        {showAdmin && (
+          <div className="flex flex-col items-start gap-3">
+            <div className="flex flex-col items-start gap-1">
+              <label htmlFor="userFullName">Full Name</label>
+              <input
+                id="userFullName"
+                type="text"
+                value={adminFullName}
+                onChange={(e) => setUserFullName(e.target.value)}
+                placeholder="Enter full name..."
+                className="border-[1px] border-neutral-800 p-2 rounded-xl outline-none"
+              />
+            </div>
+            <div className="flex flex-col items-start gap-1">
+              <label htmlFor="userPhoneNumber">Phone Number</label>
+              <input
+                id="userPhoneNumber"
+                type="number"
+                maxLength={10}
+                value={userPhone}
+                onChange={handlePhoneInputChange}
+                placeholder="e.g. 1234567890"
+                className="border-[1px] border-neutral-800 p-2 rounded-xl outline-none"
+              />
+            </div>
+            {userPhone.length === 10 && userFullName !== "" && (
+              <span
+                onClick={handleUserSignIn}
+                className="p-1 bg-blue-500 text-white"
+              >
+                Sign in with google
+              </span>
+            )}
+          </div>
+        )}
+      </div>
