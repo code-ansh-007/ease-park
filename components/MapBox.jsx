@@ -69,6 +69,28 @@ function MapBox({ sites }) {
     setSearchLocate(true);
   };
 
+  // ? DISTANCE CALCULATION FUNCTION
+
+  function calculateDistance(lat1, lon1, lat2, lon2) {
+    const earthRadiusKm = 6371;
+
+    const deg2rad = (deg) => deg * (Math.PI / 180);
+    const lat1Rad = deg2rad(lat1);
+    const lon1Rad = deg2rad(lon1);
+    const lat2Rad = deg2rad(lat2);
+    const lon2Rad = deg2rad(lon2);
+
+    const dLat = lat2Rad - lat1Rad;
+    const dLon = lon2Rad - lon1Rad;
+    const a =
+      Math.sin(dLat / 2) ** 2 +
+      Math.cos(lat1Rad) * Math.cos(lat2Rad) * Math.sin(dLon / 2) ** 2;
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    const distance = earthRadiusKm * c;
+
+    return distance;
+  }
+
   return isLoaded ? (
     <div className="flex flex-col items-start gap-3 mt-5">
       <div className="flex flex-col items-start gap-3 px-4">

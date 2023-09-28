@@ -10,6 +10,7 @@ import {
   where,
 } from "firebase/firestore";
 import { db } from "@/firebase";
+import { useRouter } from "next/router";
 
 const Signin = () => {
   const [showAdmin, setShowAdmin] = useState(false);
@@ -31,6 +32,8 @@ const Signin = () => {
       ? setUserPhone(cleanedPhoneNumber)
       : setAdminPhone(cleanedPhoneNumber);
   };
+
+  const router = useRouter();
 
   const updateDetails = async (role) => {
     const q = query(
@@ -63,7 +66,10 @@ const Signin = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
+    <div className="flex flex-col items-center justify-center gap-10 h-screen bg-[#062145] ">
+      <h1 className="text-3xl text-white">
+        Ease<span className="text-[#5EE65A]">Park</span>
+      </h1>
       {!session && (
         <div>
           <button
@@ -79,14 +85,20 @@ const Signin = () => {
 
       {/* details section */}
       {session && (
-        <div className="flex flex-col items-center gap-3">
-          <button onClick={signOut} className="p-1 bg-red-500 text-white">
+        <div className="flex flex-col items-center gap-3 ">
+          {/* <button onClick={signOut} className="p-1 bg-red-500 text-white">
             log out
-          </button>
-          <span className="text-xl font-semibold">Who are you ?</span>
-          <div className="flex flex-col gap-3 items-center">
+          </button> */}
+          <span className="text-xl font-semibold text-white">
+            Who are you ?
+          </span>
+          <div className="flex flex-col gap-5 items-center w-full">
             <span
-              className="p-2 bg-blue-500 text-white"
+              className={`p-2 bg-green-400 active:scale-110 transition transform duration-300 border-2 border-green-500 rounded-2xl  font-bold w-full text-center ${
+                showUser
+                  ? "bg-gray-200 text-gray-500 border-gray-600"
+                  : "text-black"
+              }`}
               onClick={() => {
                 setShowUser(true);
                 setShowAdmin(false);
@@ -95,7 +107,11 @@ const Signin = () => {
               User
             </span>
             <span
-              className="p-2 bg-blue-500 text-white"
+              className={`p-2 bg-green-400 active:scale-110 transition transform duration-300 border-2 border-green-500 rounded-2xl  font-bold w-full text-center ${
+                showAdmin
+                  ? "bg-gray-200 text-gray-500 border-gray-600"
+                  : "text-black"
+              }`}
               onClick={() => {
                 setShowAdmin(true);
                 setShowUser(false);
@@ -106,18 +122,28 @@ const Signin = () => {
             {showUser && (
               <div className="flex flex-col items-start gap-3">
                 <div className="flex flex-col items-start gap-1">
-                  <label htmlFor="userFullName">User Full Name</label>
+                  <label
+                    htmlFor="userFullName"
+                    className="text-white font-semibold"
+                  >
+                    User Full Name
+                  </label>
                   <input
                     id="userFullName"
                     type="text"
                     value={userFullName}
                     onChange={(e) => setUserFullName(e.target.value)}
                     placeholder="Enter full name..."
-                    className="border-[1px] border-neutral-800 p-2 rounded-xl outline-none"
+                    className="text-white p-2 rounded-xl outline-none bg-transparent border-2 border-green-500"
                   />
                 </div>
                 <div className="flex flex-col items-start gap-1">
-                  <label htmlFor="userPhoneNumber">User Phone Number</label>
+                  <label
+                    htmlFor="userPhoneNumber"
+                    className="text-white font-semibold"
+                  >
+                    User Phone Number
+                  </label>
                   <input
                     id="userPhoneNumber"
                     type="number"
@@ -125,15 +151,16 @@ const Signin = () => {
                     value={userPhone}
                     onChange={(e) => handlePhoneInputChange(e, "user")}
                     placeholder="e.g. 1234567890"
-                    className="border-[1px] border-neutral-800 p-2 rounded-xl outline-none"
+                    className="text-white p-2 rounded-xl outline-none bg-transparent border-2 border-green-500"
                   />
                 </div>
                 {userPhone.length === 10 && userFullName !== "" && (
                   <button
                     onClick={() => {
                       updateDetails("user");
+                      router.push("/home");
                     }}
-                    className="p-1 bg-blue-500 text-white"
+                    className={`p-1  bg-green-400 active:scale-110 transition transform duration-300 border-2 border-green-500 rounded-2xl  font-bold w-full text-center `}
                   >
                     Submit
                   </button>
@@ -143,18 +170,28 @@ const Signin = () => {
             {showAdmin && (
               <div className="flex flex-col items-start gap-3">
                 <div className="flex flex-col items-start gap-1">
-                  <label htmlFor="userFullName">Admin Full Name</label>
+                  <label
+                    htmlFor="userFullName"
+                    className="text-white font-semibold"
+                  >
+                    Admin Full Name
+                  </label>
                   <input
                     id="userFullName"
                     type="text"
                     value={adminFullName}
                     onChange={(e) => setAdminFullName(e.target.value)}
                     placeholder="Enter full name..."
-                    className="border-[1px] border-neutral-800 p-2 rounded-xl outline-none"
+                    className="text-white p-2 rounded-xl outline-none bg-transparent border-2 border-green-500"
                   />
                 </div>
                 <div className="flex flex-col items-start gap-1">
-                  <label htmlFor="userPhoneNumber">Admin Phone Number</label>
+                  <label
+                    htmlFor="userPhoneNumber"
+                    className="text-white font-semibold"
+                  >
+                    Admin Phone Number
+                  </label>
                   <input
                     id="userPhoneNumber"
                     type="number"
@@ -162,15 +199,16 @@ const Signin = () => {
                     value={adminPhone}
                     onChange={(e) => handlePhoneInputChange(e, "admin")}
                     placeholder="e.g. 1234567890"
-                    className="border-[1px] border-neutral-800 p-2 rounded-xl outline-none"
+                    className="text-white p-2 rounded-xl outline-none bg-transparent border-2 border-green-500"
                   />
                 </div>
                 {adminPhone.length === 10 && adminFullName !== "" && (
                   <button
                     onClick={() => {
                       updateDetails("admin");
+                      router.push("/home");
                     }}
-                    className="p-1 bg-blue-500 text-white"
+                    className={`p-1  bg-green-400 active:scale-110 transition transform duration-300 border-2 border-green-500 rounded-2xl  font-bold w-full text-center  `}
                   >
                     Submit
                   </button>
