@@ -16,15 +16,15 @@ function BottomBar(props) {
             </button>
             <button className='flex flex-col justify-center items-center text-xs leading-none'>
                 <AiFillClockCircle size={"24px"} />
-                <h1>Session</h1>
+                <h1 className='pt-1'>Session</h1>
             </button>
             <button className='flex flex-col justify-center items-center text-xs leading-none'>
                 <FaLocationDot size={"24px"}/>
-                <h1>Location</h1>
+                <h1 className='pt-1'>Location</h1>
             </button>
             <button className='flex flex-col justify-center items-center text-xs leading-none'>
                 <FaHistory size={"24px"}  />
-                <h1>History</h1>
+                <h1 className='pt-1'>History</h1>
             </button>
         </div>
       </div>

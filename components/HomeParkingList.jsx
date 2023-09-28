@@ -1,6 +1,8 @@
 import { VT323 } from "next/font/google";
 import SmallCard from "./SmallCard";
 import { Poppins } from "next/font/google";
+import { BiSolidCar } from "react-icons/bi";
+import { FaMotorcycle } from "react-icons/fa6";
 
 
 const vt = VT323({ subsets: ["latin"], weight: ["400"] });
@@ -47,19 +49,19 @@ function HomeParkingList({ sites, location }) {
   const updatedSites = updateSitesWithDistances();
 
   return (
-    <main className={`bg-[#161B24]  ${vt.className} pt-3`}>
+    <main className={`bg-[#161B24]  ${pop.className} pt-3`}>
       <div className=" h-full bg-[#1c2331] rounded-t-3xl px-4">
-        <div className="flex justify-evenly pt-4 text-white">
-          <button className="flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid">
-            <img src="car.svg" alt="" /> Car
+        <div className="flex justify-evenly pt-4 text-white ">
+          <button className="flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid text-xs">
+            <BiSolidCar size={'28px'} /> Car
           </button>
-          <button className="flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid">
-            <img src="Bike.png" alt="" /> Bike
+          <button className="flex flex-col justify-center items-center bg-[#319a3c54]  h-14 w-16 rounded-xl border-2 border-[#319a3c] border-solid text-xs">
+          <FaMotorcycle size={'28px'} /> Bike
           </button>
         </div>
         {/* <div className="flex justify-center items-center pt-4 pb-32"></div>
         <div className="pt-24"></div> */}
-        <div className={`grid grid-cols-2 gap-5 ${pop.className}`}>
+        <div className={` pt-4 grid grid-cols-2 gap-5  ${pop.className}`}>
           {updatedSites.map((site, index) => (
             <SmallCard key={index} site={site} />
           ))}
