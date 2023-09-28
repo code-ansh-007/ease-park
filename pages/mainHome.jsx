@@ -8,10 +8,12 @@ import MapBox from "@/components/MapBox";
 import { collection, getDocs, query } from "firebase/firestore";
 import { db } from "@/firebase";
 import { getSession } from "next-auth/react";
+import useGeoLocation from "@/hooks/useGeoLocation";
 
 const vt = VT323({ subsets: ["latin"], weight: ["400"] });
 
 export default function MainHome({ sites }) {
+  const location = useGeoLocation();
   return (
     <main className={`bg-[#161B24]  h-full ${vt.className} relative `}>
       <TopBar />
@@ -19,7 +21,7 @@ export default function MainHome({ sites }) {
       <MapBox sites={sites} />
       {/* <ParkingCard/> */}
       <div className=" w-full h-2/5 -mt- bg-[#161B24]"></div>
-      <HomeParkingList sites={sites} />
+      <HomeParkingList sites={sites} location={location} />
 
       <BottomBar />
     </main>

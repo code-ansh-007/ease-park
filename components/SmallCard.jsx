@@ -8,7 +8,9 @@ const SmallCard = ({ site }) => {
         <span className="font-bold text-green-700">₹{site.pricePerHour}</span>
       </div>
       <div className="flex items-center justify-between">
-        <span className="text-white">1.5 Km Away</span>
+        <span className="text-white">
+          {Math.round(site.distance * 100) / 100}KM
+        </span>
         <span className="text-white">Slots: {site.numSlots}</span>
       </div>
     </main>
