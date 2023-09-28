@@ -3,6 +3,7 @@ import { BiSolidHomeAlt2 } from "react-icons/bi";
 import { AiFillClockCircle } from "react-icons/ai";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaHistory } from "react-icons/fa";
+import { router } from "next/router";
 
 const pop = Poppins({ subsets: ["latin"], weight: ["400"] });
 function BottomBar(props) {
@@ -12,19 +13,31 @@ function BottomBar(props) {
     >
       <div className=" h-20 bg-[#319A3C] rounded-t-3xl ">
         <div className="flex justify-evenly items-center h-full pt-3">
-          <button className="flex flex-col  justify-center items-center text-xs leading-none">
+          <button className="flex flex-col  justify-center items-center text-xs leading-none" 
+          onClick={() => {
+            router.push("/");
+          }}>
             <BiSolidHomeAlt2 size={"24px"} />
             <h1 className="pt-1">Home</h1>
           </button>
-          <button className="flex flex-col justify-center items-center text-xs leading-none">
+          <button className="flex flex-col justify-center items-center text-xs leading-none"
+          onClick={() => {
+            router.push("/session");
+          }}>
             <AiFillClockCircle size={"24px"} />
             <h1 className="pt-1">Session</h1>
           </button>
-          <button className="flex flex-col justify-center items-center text-xs leading-none">
+          <button className="flex flex-col justify-center items-center text-xs leading-none"
+          onClick={() => {
+            router.push("/location");
+          }}>
             <FaLocationDot size={"24px"} />
             <h1 className="pt-1">Location</h1>
           </button>
-          <button className="flex flex-col justify-center items-center text-xs leading-none">
+          <button className="flex flex-col justify-center items-center text-xs leading-none"
+          onClick={() => {
+            router.push("/histroy");
+          }}>
             <FaHistory size={"24px"} />
             <h1 className="pt-1">History</h1>
           </button>

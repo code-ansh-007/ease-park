@@ -4,7 +4,7 @@ import QRCode from "react-qr-code";
 const QRcode = ({ bookingId }) => {
   return (
     <main>
-      <QRCode value={bookingId} />
+      <QRCode value={bookingId}  size={200} />
     </main>
   );
 };

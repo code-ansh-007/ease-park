@@ -16,12 +16,14 @@ export default function Home() {
     const tl = gsap.timeline();
     tl.to(titleElement, {
       duration: 2,
-      fontSize: "2rem",
+      transform: 'scale(0.7)',
       ease: "power2.inOut",
     }).to(titleElement, {
       duration: 1.5,
-      fontSize: "5rem",
+      transform: 'scale(3)',
       opacity: 0,
+      transform: 'scale(3.5)',
+      display:'none',
       ease: "power2.inOut",
     });
   }, []);
@@ -100,26 +102,28 @@ export default function Home() {
       </div>
       {/* Mobile Part */}
       <div className="flex justify-center items-center h-screen md:hidden">
-        <h1 className="text-6xl tracking-wider animated-title text-white">
+      {/* <h1 className={'${vt.className} text-6xl  tracking-wider animated-title text-white'}>
           Ease<span className="text-[#5EE65A]">Park</span>
-        </h1>
+        </h1> */}
+        <img src="easepark.svg" className="animated-title"></img>
       </div>
       <div className={` fixed top-0 left-0  ${isVisible ? "" : "hidden"}`}>
         <div className=" h-80 w-screen flex justify-center items-center md:hidden">
-          <h1 className="text-6xl tracking-wider text-white ">
+          {/* <h1 className="text-6xl tracking-wider text-white ">
             Ease<span className="text-[#5EE65A]">Park</span>
-          </h1>
+          </h1> */}
+          <img src="easepark.svg" className=" w-3/4"></img>
         </div>
         <div className="flex h-72 -mt-12 flex-col  items-center md:hidden">
           <button
             onClick={() => router.push("/auth/signin")}
-            className=" bg-green-600 px-24 py-3 rounded-2xl text-2xl m-4"
+            className=" bg-green-600 px-24 py-3 rounded-2xl text-2xl m-4 font-bold text-white"
           >
             Sign In
           </button>
           <button
             onClick={() => router.push("/auth/signin")}
-            className=" bg-green-600 px-24 py-3 rounded-2xl text-2xl m-4"
+            className=" bg-green-600 px-24 py-3 rounded-2xl text-2xl m-4 font-bold text-white"
           >
             Sign Up
           </button>

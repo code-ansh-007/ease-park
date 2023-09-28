@@ -3,6 +3,7 @@ import { VT323 } from "next/font/google";
 import Link from "next/link";
 import { MdAdminPanelSettings } from "react-icons/md";
 
+
 const vt = VT323({ subsets: ["latin"], weight: ["400"] });
 function TopBar({ role }) {
   const router = useRouter();
@@ -11,9 +12,7 @@ function TopBar({ role }) {
       <div className=" h-[72px] bg-[#319A3C]  z-20">
         <div className="flex justify-evenly items-center h-full pt-3">
           <img src="Menu.svg" alt="" />
-          <h1 className="text-3xl text-white font-vt ">
-            Ease<span className="text-[#5EE65A]  ">Park</span>
-          </h1>
+          <img src="easepark.svg" alt="" width={'150px'}  />
           {role !== "admin" ? (
             <button
               onClick={() => {
