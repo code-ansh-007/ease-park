@@ -34,7 +34,7 @@ export async function getServerSideProps(context) {
   const q1 = query(collection(db, "users"), where("userId", "==", uid));
   const qSnap1 = await getDocs(q1);
   const user = qSnap1.docs[0].data();
-  console.log(user);
+  // console.log(user);
   if (user.role !== "admin") {
     return {
       redirect: {
