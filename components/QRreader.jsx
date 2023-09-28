@@ -46,7 +46,10 @@ const QRreader = () => {
       <video ref={videoRef} className="rounded-xl"></video>
 
       {bookingId.length > 0 && (
-        <button className="bg-red-400 p-2" onClick={verifyId}>
+        <button
+          className="bg-green-500 px-4 p-1 text-white rounded-xl"
+          onClick={verifyId}
+        >
           Verify QR
         </button>
       )}
