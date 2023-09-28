@@ -1,5 +1,4 @@
 import { VT323 } from "next/font/google";
-import ParkingCard from "./Parkingcard";
 import SmallCard from "./SmallCard";
 
 const vt = VT323({ subsets: ["latin"], weight: ["400"] });
