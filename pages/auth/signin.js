@@ -71,7 +71,7 @@ const Signin = () => {
 
   return (
     <div className={`flex flex-col items-center justify-center gap-10 h-screen bg-[#062145] ${vt.className}`}>
-      <h1 className="text-8xl text-white">
+      <h1 className="text-6xl text-white">
         Ease<span className="text-[#5EE65A]">Park</span>
       </h1>
       {!session && (
