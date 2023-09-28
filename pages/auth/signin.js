@@ -1,6 +1,10 @@
 import React, { useState } from "react";
 import { signIn, signOut, useSession } from "next-auth/react";
 import { v4 as uuid } from "uuid";
+import { VT323 } from "next/font/google";
+
+const vt = VT323({ subsets: ["latin"], weight: ["400"] });
+
 import {
   collection,
   getDocs,
@@ -66,8 +70,8 @@ const Signin = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center gap-10 h-screen bg-[#062145] ">
-      <h1 className="text-3xl text-white">
+    <div className={`flex flex-col items-center justify-center gap-10 h-screen bg-[#062145] ${vt.className}`}>
+      <h1 className="text-8xl text-white">
         Ease<span className="text-[#5EE65A]">Park</span>
       </h1>
       {!session && (
@@ -76,7 +80,7 @@ const Signin = () => {
             onClick={() => {
               signIn("google", { callbackUrl: "/auth/signin" });
             }}
-            className="bg-blue-500 p-2 rounded-xl text-white"
+            className="bg-green-600 px-8 py-3 rounded-xl text-white text-xl"
           >
             Sign In with Google
           </button>
