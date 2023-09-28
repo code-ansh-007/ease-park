@@ -4,18 +4,18 @@ import SearchBar from "@/components/SearchBar";
 import BottomBar from "@/components/BottomBar";
 import HomeParkingList from "@/components/HomeParkingList";
 import MapBox from "@/components/MapBox";
-import { collection, getDocs, query } from "firebase/firestore";
+import { collection, getDocs, query, where } from "firebase/firestore";
 import { db } from "@/firebase";
 import { getSession } from "next-auth/react";
 import useGeoLocation from "@/hooks/useGeoLocation";
 
 const vt = VT323({ subsets: ["latin"], weight: ["400"] });
 
-export default function MainHome({ sites }) {
+export default function MainHome({ sites, role }) {
   const location = useGeoLocation();
   return (
     <main className={`bg-[#161B24]  h-full ${vt.className} relative `}>
-      <TopBar />
+      <TopBar role={role} />
       {/* mapbox */}
       <MapBox sites={sites} />
       {/* <ParkingCard/> */}
@@ -27,12 +27,18 @@ export default function MainHome({ sites }) {
   );
 }
 
-export async function getServerSideProps() {
-  const session = getSession();
-  if (!session) {
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  const uid = session?.user?.id;
+
+  const q1 = query(collection(db, "users"), where("userId", "==", uid));
+  const qSnap1 = await getDocs(q1);
+  const user = qSnap1.docs[0].data();
+  console.log(user);
+  if (user.role !== "admin") {
     return {
       redirect: {
-        destination: "/",
+        destination: "/mainHome",
         permanent: false,
       },
     };
@@ -54,6 +60,7 @@ export async function getServerSideProps() {
   return {
     props: {
       sites,
+      role: user.role,
     },
   };
 }
