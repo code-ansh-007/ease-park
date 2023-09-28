@@ -1,15 +1,19 @@
 import { db } from "@/firebase";
 import useModalState from "@/zustand/store";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
-import { useSession } from "next-auth/react";
+import { deleteDoc, doc, updateDoc } from "firebase/firestore";
 import React, { useState } from "react";
 import { AiFillCloseCircle } from "react-icons/ai";
 
-const CreateModal = () => {
-  const { closeModal } = useModalState();
-  const { data: session } = useSession();
-
-  // ? form states
+const EditSite = () => {
+  const { closeEdit, editObject } = useModalState();
+  const handleClose = (e) => {
+    if (
+      e.target.className ===
+      "flex flex-col items-center justify-center h-screen bg-black/50 w-full fixed left-0 top-0"
+    )
+      closeModal();
+    else return;
+  };
 
   const [listingName, setListingName] = useState("");
   const [price, setPrice] = useState(""); // ? this is price per hour
@@ -20,58 +24,38 @@ const CreateModal = () => {
   const [numSlots, setNumSlots] = useState(3);
   const [gmapUrl, setGmapUrl] = useState("");
 
-  const handleClose = (e) => {
-    if (
-      e.target.className ===
-      "flex flex-col items-center justify-center h-screen bg-black/50 w-full fixed left-0 top-0"
-    )
-      closeModal();
-    else return;
-  };
-
-  const validateInputs = () => {}; // ? to be implemented further in the build
+  useState(() => {
+    setListingName(editObject.listingName);
+    setPrice(editObject.pricePerHour);
+    setNumSlots(editObject.numSlots);
+    setGmapUrl(editObject.gmapUrl);
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await addDoc(collection(db, "listings"), {
-        ownerId: session?.user?.id,
+      const id = editObject.id;
+      await updateDoc(doc(db, "listings", id), {
         listingName,
-        pricePerHour: price,
-        location: extractCoordinatesFromUrl(gmapUrl),
+        price,
         numSlots,
         gmapUrl,
-        timeStamp: serverTimestamp(),
       });
-      alert("Successfully added the listing");
-      closeModal();
-    } catch (error) {
-      alert("Provide valid location URL");
+      alert("successfully updated the document");
+    } catch (err) {
+      alert("Document not updated");
     }
-  };
-
-  const extractCoordinatesFromUrl = (url) => {
-    const regex = /@(-?\d+\.\d+),(-?\d+\.\d+),/;
-    const match = url.match(regex);
-
-    if (match && match.length === 3) {
-      const latitude = parseFloat(match[1]);
-      const longitude = parseFloat(match[2]);
-
-      return { latitude, longitude };
-    }
-    return null;
   };
 
   return (
     <main
       onClick={handleClose}
-      className="flex flex-col items-center justify-center h-screen bg-black/50 w-full fixed top-0"
+      className="flex flex-col items-center justify-center h-screen bg-black/50 w-full fixed left-0 top-0"
     >
       <div className="bg-white p-2 rounded-xl flex flex-col items-start gap-3 w-[300px]">
         <div className="w-full flex items-center justify-between">
-          <span className="font-bold text-xl">Enter parking lot details</span>
-          <AiFillCloseCircle onClick={closeModal} size={28} />
+          <span className="font-bold text-xl">Edit parking lot details</span>
+          <AiFillCloseCircle onClick={closeEdit} size={28} />
         </div>
         <form
           onSubmit={handleSubmit}
@@ -134,7 +118,7 @@ const CreateModal = () => {
             />
           </div>
           <button className="bg-blue-500 p-1 text-white rounded-xl px-4 active:scale-110 transition transform duration-300">
-            Create
+            Update
           </button>
         </form>
       </div>
@@ -142,4 +126,4 @@ const CreateModal = () => {
   );
 };
 
-export default CreateModal;
+export default EditSite;

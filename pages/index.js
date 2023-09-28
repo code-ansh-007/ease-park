@@ -17,8 +17,10 @@ export async function getServerSideProps() {
   const qSnap = await getDocs(q);
   qSnap.forEach((doc) => {
     const siteData = doc.data();
-    let timeStamp = new Date(siteData.timeStamp);
-    siteData.timeStamp = timeStamp.toDateString();
+    if (siteData.timeStamp && siteData.timeStamp.seconds) {
+      const serverTimestamp = new Date(siteData.timeStamp.seconds * 1000);
+      siteData.timeStamp = serverTimestamp.toDateString();
+    }
     sites.push(siteData);
   });
 
