@@ -12,12 +12,13 @@ import Link from "next/link";
 import Image from "next/image";
 import { db } from "@/firebase";
 import { collection, getDocs, query } from "firebase/firestore";
+import SearchBar from "./SearchBar";
 // import Geocoder from "./Geocoder.js";
 // import { Geocoder } from "./Geocoder";
 
 const containerStyle = {
   width: "100vw",
-  height: "100vh",
+  height: "60vh",
 };
 
 function MapBox({ sites }) {
@@ -56,6 +57,8 @@ function MapBox({ sites }) {
       });
   }, [location]);
 
+
+
   const searchLocation = async () => {
     const geoCodeUrl = `https://api.opencagedata.com/geocode/v1/json?q=${city}&key=8b30eeeacfb94fcd8e9e423e6ee9633f`;
     const resp = await fetch(geoCodeUrl);
@@ -70,25 +73,12 @@ function MapBox({ sites }) {
   };
 
   return isLoaded ? (
-    <div className="flex flex-col items-start gap-3 mt-5">
-      <div className="flex flex-col items-start gap-3 px-4">
-        <span className="font-semibold text-xl">Search by city</span>
-        <div className="flex items-center gap-3">
-          <input
-            type="text"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            className="p-1 pl-2 border-blue-700 border-[2px] rounded-2xl"
-            placeholder="Enter city name..."
-          />
-          <button
-            onClick={searchLocation}
-            className="text-white active:scale-110 transition transform duration-300 bg-blue-500 p-1 px-4 rounded-2xl font-semibold"
-          >
-            Search
-          </button>
-        </div>
-      </div>
+
+    <div className="flex flex-col items-start gap-3  ">
+      <div className=" z-20 w-full bg-transparent">
+    <SearchBar value={city} setterFunction={setCity} onSubmit={searchLocation}/>
+    </div>
+      <div className="bg-black -mt-16 z-10" >
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={center}
@@ -135,6 +125,7 @@ function MapBox({ sites }) {
           </InfoWindowF>
         )}
       </GoogleMap>
+      </div>
     </div>
   ) : null;
 }

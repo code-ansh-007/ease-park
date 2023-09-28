@@ -4,7 +4,7 @@ import { useSpring, animated } from 'react-spring';
 
 const vt = VT323({ subsets: ['latin'], weight: ['400'] });
 
-function SearchBar(props) {
+function SearchBar({value, setterFunction, onSubmit}) {
   const [isInputFocused, setInputFocused] = useState(false);
 
   const handleInputFocus = () => {
@@ -22,15 +22,17 @@ function SearchBar(props) {
   });
 
   return (
-    <main className={`bg-[#161B24] ${vt.className}`}>
+    <main className={`bg-[#161B24] ${vt.className} w-full pb-5 rounded-b-3xl `}>
       <div className='h-12 mt-4 flex justify-center items-center'>
-        <div className={`bg-[#319a3c54] w-3/4 h-5/6 rounded-full border-2 border-[#319a3c] border-solid flex justify-start items-center`}>
+        <div className={`bg-[#161b24;] w-3/4 h-5/6 rounded-full border-2 border-[#319a3c] border-solid flex justify-start items-center`}>
           <animated.div style={iconAnimation} className='p-2'>
-            <button className='py-2'><img src="Search.svg" alt="" width={'20px'} height={'20px'} /></button>
+            <button className='py-2' onClick={onSubmit}><img src="Search.svg" alt="" width={'20px'} height={'20px'} /></button>
           </animated.div>
           <input
             type="text"
             name=""
+            value={value}
+onChange={e=> setterFunction(e.target.value)}
             id=""
             placeholder='Search...'
             className='text-white bg-transparent w-4/6 h-full outline-none placeholder:text-[#5EE65A]'
